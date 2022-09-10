@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pokemon</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container bg-light">
+        <div class="d-flex justify-content-center mt-2">
+            <h1>Pokemon Crawler</h1>
+        </div>
+        <hr/>
+        <div class="mt-2 mb-2 d-flex justify-content-between">
+            <button class="btn btn-primary fw-bold rounded-pill" type="button" onclick="getAndUpdatePokemon()">Get Pokemon</button>
+            <div id="spinner" class="d-none spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <form method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger fw-bold rounded-pill" type="submit">Delete All Pokemon</button>
+            </form>
+        </div>
+        <div style="height: 750px; overflow: auto">
+            {% for pokemon in all_pokemon %}
+                <div class="card mt-1">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ pokemon.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Is Legendary: {{ pokemon.is_legendary }}</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Is Mythical: {{ pokemon.is_mythical }}</h6>
+                    <p class="card-text">{{ pokemon.description }}</p>
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <script type="text/javascript">
+        function getAndUpdatePokemon(){
+            document.getElementById("spinner").classList.remove("d-none");
+            fetch('http://localhost:8000/api/get-and-update-pokemon/').then(function (response) {
+                return response.json();
+            }).then((data) => {
+                location.reload()
+            });
+        }
+
+    </script>
+</body>
+</html>
+
