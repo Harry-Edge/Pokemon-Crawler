@@ -32,7 +32,7 @@ class TestPokemonCrawler(TestCase):
 
     def test_update_existing_pokemon(self):
         pokemon_crawler = PokemonCrawler()
-        pokemon_data = pokemon_crawler.get_individual_pokemon(1)gi
+        pokemon_data = pokemon_crawler.get_individual_pokemon(1)
         pokemon_crawler.add_new_pokemon(pokemon_data)
         pokemon_data['name'] = 'new name'
         pokemon_crawler.update_existing_pokemon(pokemon_data)
